@@ -1,8 +1,6 @@
 sudo: required
 
-services:
-  - docker
-  - mongodb
+services: mongodb
 
 language: python
 python:

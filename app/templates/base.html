@@ -1,0 +1,14 @@
+<html>
+    <head>
+    {% if title %}
+        <title>{{ title }} - URLShortener</title>
+    {% else %}
+        <title>Welcome to URLShortener</title>
+    {% endif %}
+    </head>
+    <body>
+        {% block content %}
+
+        {% endblock %}
+    </body>
+</html>

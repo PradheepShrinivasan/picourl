@@ -1,0 +1,23 @@
+<!-- extend from base layout -->
+{% extends "base.html" %}
+
+{% block content %}
+
+    <h1>URL Shoterner!</h1>
+
+    <form action="/UrlShorten" method="post" >
+      <div>
+          <input type="url" id="url"  name="url"/>
+      </div>
+      <div>
+          <input type="submit" value="Shorten">
+      </div>
+    </form>
+
+    {% if shortURL %}
+        <div class="shortUrlOutput">
+            {{ shortURL }}
+        </div>
+    {% endif %}
+
+{% endblock %}

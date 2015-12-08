@@ -59,6 +59,24 @@ class TestUrlShortener(unittest.TestCase):
 
         self.assertEqual(resultUrl, None)
 
+    def test_removeURL_Existing(self):
+        shortUrl = 'removeURL'
+        url = 'http://www.google.com'
+        self.urlShortener.saveUrl(shortUrl, url)
+
+        result = self.urlShortener.removeUrl(shortUrl)
+
+        self.assertEqual(result, True)
+
+
+    def test_removeURL_NonExisting(self):
+        shortURL = 'NonExisting'
+
+        result = self.urlShortener.removeUrl(shortURL)
+
+        self.assertEqual(result, True)
+
+
     def test_generateRandom(self):
 
         self.assertEqual(len(self.urlShortener.generateShortUrl()), 6)

@@ -5,9 +5,12 @@ from MongodbHandler import MongoDatabaseHandler
 
 
 class urlShortener:
-    def __init__(self):
+    def __init__(self, collection=None):
         databaseHandler = MongoDatabaseHandler()
-        self.collection = databaseHandler.get_ShortURLCollection()
+        if collection is None:
+            self.collection = databaseHandler.get_ShortURLCollection()
+        else:
+            self.collection = collection
 
     #  Save short Url and url
     # The short Url is stored as index as all looks

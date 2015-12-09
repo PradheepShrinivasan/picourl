@@ -5,10 +5,12 @@ from urlshortener import urlShortener
 
 
 class TestUrlShortener(unittest.TestCase):
+
     def setUp(self):
         connection = pymongo.MongoClient('mongodb://localhost:27017/')
         self.database = connection.test
         self.collection = self.database.urlshortener
+        self.collection.drop()
         self.urlShortener = urlShortener(self.collection)
 
     def test_saveUrl_Unique(self):

@@ -35,11 +35,11 @@ def shortenUrl():
 @app.route('/<shorturl>')
 def getURL(shorturl):
 
-    app.logger.debug('the value of shorturl %s', shorturl)
     url_shortener_handler = urlShortener()
-
     url = url_shortener_handler.findUrl(shorturl)
+
     app.logger.debug("value of url is %s", url)
+
     if url is not None:
         return redirect(url, code=302)
     else:

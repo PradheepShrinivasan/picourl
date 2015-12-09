@@ -2,4 +2,6 @@
 import os
 
 from app import app
-app.run(host='0.0.0.0', port=int(os.environ['PORT']),debug=True)
+from config import PORT
+
+app.run(host='0.0.0.0', port=PORT,debug=True)

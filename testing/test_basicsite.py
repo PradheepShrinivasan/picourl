@@ -21,6 +21,7 @@ class TestBasicUrlShortener(unittest.TestCase):
     def create_app(self):
         app = Flask(__name__)
         app.config['TESTING'] = True
+        app.debug = True
         self.baseURL = 'http://localhost:5000'
         return app
 
@@ -45,7 +46,6 @@ class TestBasicUrlShortener(unittest.TestCase):
         rv =self.client.get('urlshorten')
 
         self.assertEqual(rv.status_code, 302)
-        # TODO figure out why this is not returning port
         assert 'localhost'in rv.location
 
 
@@ -66,6 +66,7 @@ class TestBasicUrlShortener(unittest.TestCase):
 
         self.assertEqual(rv.status_code, 200)
         shorturl = self.baseURL + '/' + self.generate_shortURL()
+        # print rv.data
         assert shorturl in str(rv.data)
 
         #cleanup so next time it works

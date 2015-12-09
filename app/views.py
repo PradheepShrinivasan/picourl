@@ -3,6 +3,7 @@ import os
 from app import app
 from flask import render_template, request, redirect, abort
 from models.urlshortener import urlShortener
+from config import SITE_URL
 
 
 @app.route('/')
@@ -24,11 +25,10 @@ def shortenUrl():
 
         if url_shortener_handler.saveUrl(short_url, url):
             # TODO move the site_prefix to a config file
-            app.logger.debug("value of short url(%s) for url is (%s)", short_url, url)
-            site_url = os.environ['SITE_URL']
-            return render_template('index.html', shortURL=site_url+short_url)
+            app.logger.debug('value of short url(%s) for url is (%s)', short_url, url)
+            return render_template('index.html', shortURL=SITE_URL+'/'+short_url)
         else:
-            app.logger.critical("Error in saving short url(%s) for url is (%s)", short_url,url)
+            app.logger.critical('Error in saving short url(%s) for url is (%s)', short_url,url)
             return render_template('index.html', shortURL=None)
     else:
         return redirect('/')
@@ -40,7 +40,7 @@ def getURL(shorturl):
     url_shortener_handler = urlShortener()
     url = url_shortener_handler.findUrl(shorturl)
 
-    app.logger.debug("value of url is %s", url)
+    app.logger.debug('value of url is %s', url)
 
     if url is not None:
         return redirect(url, code=302)

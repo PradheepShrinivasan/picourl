@@ -16,7 +16,7 @@ Picourl allows configuration of the following variables in `config.py`
   ```
   
 ## Documentation
-  The discussion on all design and all configuration are available in blog post [1](http://pradheepshrinivasan.github.io/mongodb/python/flask/pymongo/2015/12/03/UrlShortener_in_python_Part_1/),[2](http://pradheepshrinivasan.github.io/mongodb/python/flask/pymongo/2015/12/06/UrlShortener_in_python_Part_2/),[3](http://pradheepshrinivasan.github.io/mongodb/python/flask/pymongo/2015/12/06/UrlShortener_in_python_Part_3/) 
+  The discussion on  design and  configuration are available in blog post [1](http://pradheepshrinivasan.github.io/mongodb/python/flask/pymongo/2015/12/03/UrlShortener_in_python_Part_1/),[2](http://pradheepshrinivasan.github.io/mongodb/python/flask/pymongo/2015/12/06/UrlShortener_in_python_Part_2/),[3](http://pradheepshrinivasan.github.io/mongodb/python/flask/pymongo/2015/12/06/UrlShortener_in_python_Part_3/) 
 
 ## Releases
 

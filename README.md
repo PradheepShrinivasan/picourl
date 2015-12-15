@@ -1,4 +1,5 @@
 # PicoURL
+![](https://travis-ci.org/PradheepShrinivasan/picourl.svg?branch=master)
 
 A PicoURL is a URL shortener written in python using Flask and pymongo.
 

@@ -22,7 +22,6 @@ before_script:
 
 # command to run tests
 script:
-    python -m unittest discover
     coverage run --source=app -m unittest discover
 
 after_success:

@@ -11,7 +11,7 @@ python:
 # command to install dependencies
 install:
   - pip install -r requirements.txt
-
+  - pip install coveralls
 
 
 # the below is to add an artifical wait for mongodb
@@ -23,3 +23,7 @@ before_script:
 # command to run tests
 script:
     python -m unittest discover
+    coverage run --source=app -m unittest discover
+
+after_success:
+    coveralls`

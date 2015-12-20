@@ -8,5 +8,5 @@ coverage:
 	coverage report -m
 
 clean:
-	rm .coverage
+	rm -rf .coverage
 	rm -rf *.pyc

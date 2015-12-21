@@ -4,7 +4,7 @@ import string
 from MongodbHandler import MongoDatabaseHandler
 
 
-class urlShortener:
+class urlShortener(object):
     def __init__(self, collection = None):
 
         databaseHandler = MongoDatabaseHandler()

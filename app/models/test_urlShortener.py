@@ -5,7 +5,6 @@ from urlshortener import urlShortener
 
 
 class TestUrlShortener(unittest.TestCase):
-
     def setUp(self):
         connection = pymongo.MongoClient('mongodb://localhost:27017/')
         self.database = connection.test
@@ -43,7 +42,6 @@ class TestUrlShortener(unittest.TestCase):
         self.collection.delete_one({'_id': shortUrl})
 
     def test_findUrl_Existing(self):
-
         shortUrl = 'findUrl'
         url = 'http://www.google.com'
         self.urlShortener.saveUrl(shortUrl, url)
@@ -70,7 +68,6 @@ class TestUrlShortener(unittest.TestCase):
 
         self.assertEqual(result, True)
 
-
     def test_removeURL_NonExisting(self):
         shortURL = 'NonExisting'
 
@@ -78,13 +75,12 @@ class TestUrlShortener(unittest.TestCase):
 
         self.assertEqual(result, True)
 
-
     def test_generateRandom(self):
-
         self.assertEqual(len(self.urlShortener.generateShortUrl()), 6)
         self.assertEqual(len(self.urlShortener.generateShortUrl(7)), 7)
 
         self.assertEqual(self.urlShortener.generateShortUrl().isalnum(), True)
+
 
 if __name__ == '__main__':
     unittest.main()

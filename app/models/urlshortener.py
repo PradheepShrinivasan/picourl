@@ -10,7 +10,7 @@ class urlShortener(object):
         databaseHandler = MongoDatabaseHandler()
 
         if collection is None:
-            self.collection = databaseHandler.get_ShortURLCollection()
+            self.collection = databaseHandler.get_shortURL_collection()
         else:
             self.collection = collection
 

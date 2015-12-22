@@ -11,5 +11,9 @@ class MongoDatabaseHandler(object):
         self.connection = pymongo.MongoClient(CONNECTION_URI)
         self.database = self.connection.urlshortener
 
-    def get_ShortURLCollection(self):
+
+    def get_shortURL_collection(self):
         return self.database.shorturls
+
+    def get_users_collection(self):
+        return self.database.users

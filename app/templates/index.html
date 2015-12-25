@@ -3,7 +3,10 @@
 {% block content %}
 
     {% if current_user.is_authenticated  %}
+
         Hi {{ current_user.email }}!
+
+        {% include "logout.html" %}
 
     {% else %}
 
@@ -11,7 +14,7 @@
 
     {% endif %}
 
-
     {% include "urlshorten.html" %}
+
 
 {% endblock %}

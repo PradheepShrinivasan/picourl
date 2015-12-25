@@ -1,6 +1,7 @@
 # PicoURL
 ![](https://travis-ci.org/PradheepShrinivasan/picourl.svg?branch=master)
 [![Coverage Status](https://coveralls.io/repos/PradheepShrinivasan/picourl/badge.svg?branch=addCoverageSupport&service=github)](https://coveralls.io/github/PradheepShrinivasan/picourl?branch=addCoverageSupport)
+[![Code Health](https://landscape.io/github/PradheepShrinivasan/picourl/master/landscape.svg?style=flat)](https://landscape.io/github/PradheepShrinivasan/picourl/master)
 
 A PicoURL is a URL shortener written in python using Flask and pymongo.
 
@@ -23,3 +24,8 @@ Picourl allows configuration of the following variables in `config.py`
 ## Releases
 
 0.1 - Basic working code with storage to backend mongodb and redirect on using shortURL
+
+## LICENCE
+
+The software is provided in BSD licence, see LICENCE file for more details.
+

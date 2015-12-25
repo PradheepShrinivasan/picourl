@@ -13,14 +13,9 @@ from user import User
 from config import SITE_URL
 
 
-@app.route('/')
-@app.route('/index')
+@app.route('/', methods=['post', 'get'])
+@app.route('/index', methods=['post', 'get'])
 def index():
-    return redirect('/urlshorten')
-
-
-@app.route('/urlshorten', methods=['POST', 'GET'])
-def shortenUrl():
     login_form = LoginForm()
     logout_form = LogoutForm()
 
@@ -42,16 +37,11 @@ def shortenUrl():
         else:
             app.logger.critical('Error in saving short url(%s) for url is (%s)', short_url, url)
             flash('Internal error try again')
-            return render_template('index.html',
-                                   login_form=login_form,
-                                   logout_form=logout_form,
-                                   shortURL=None)
-    else:
-        return render_template('index.html',
+
+    return render_template('index.html',
                                login_form=login_form,
                                logout_form=logout_form,
                                shortURL=None)
-
 
 @app.route('/<shorturl>')
 def getURL(shorturl):

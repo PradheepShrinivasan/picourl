@@ -1,12 +1,17 @@
 <html>
     <head>
-    {% if title %}
-        <title>{{ title }} - URLShortener</title>
-    {% else %}
-        <title>Welcome to URLShortener</title>
-    {% endif %}
+
+        {% if title %}
+            <title>{{ title }} - URL Shortener</title>
+        {% else %}
+            <title>Welcome to URL Shortener</title>
+        {% endif %}
+        <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
     </head>
     <body>
+        {% include "flash.html" %}
+
         {% block content %}
 
         {% endblock %}

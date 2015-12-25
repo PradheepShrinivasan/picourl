@@ -80,7 +80,3 @@ class TestUrlShortener(unittest.TestCase):
         self.assertEqual(len(self.urlShortener.generateShortUrl(7)), 7)
 
         self.assertEqual(self.urlShortener.generateShortUrl().isalnum(), True)
-
-
-if __name__ == '__main__':
-    unittest.main()

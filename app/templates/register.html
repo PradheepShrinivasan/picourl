@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+        <form action= "{{ url_for('register') }}" method="post" >
+
+        {{ form.hidden_tag() }}
+
+        {{ (form.email) }}
+        {{ (form.password) }}
+        {{ (form.confirm_password) }}
+
+        {{ form.submit }}
+
+    </form>
+
+{% endblock %}

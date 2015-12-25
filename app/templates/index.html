@@ -1,23 +1,17 @@
-<!-- extend from base layout -->
 {% extends "base.html" %}
 
 {% block content %}
 
-    <h1>URL Shoterner!</h1>
+    {% if current_user.is_authenticated  %}
+        Hi {{ current_user.email }}!
 
-    <form action="/urlshorten" method="post" >
-      <div>
-          <input type="url" id="url"  name="url"/>
-      </div>
-      <div>
-          <input type="submit" value="Shorten">
-      </div>
-    </form>
+    {% else %}
 
-    {% if shortURL %}
-        <div class="shortUrlOutput">
-            {{ shortURL }}
-        </div>
+        {% include "login.html" %}
+
     {% endif %}
+
+
+    {% include "urlshorten.html" %}
 
 {% endblock %}

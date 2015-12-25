@@ -29,10 +29,7 @@ class urlShortener(object):
     # Finds a url from shorUrl that is sent from the user
     def findUrl(self, shortUrl):
 
-        try:
-            doc = self.collection.find_one({'_id': shortUrl})
-        except:
-            return None
+        doc = self.collection.find_one({'_id': shortUrl})
         if doc is None:
             return None
 

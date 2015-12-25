@@ -1,0 +1,17 @@
+<div>
+    <form action= "{{ url_for('login') }}" method="post" >
+
+        {{ login_form.hidden_tag() }}
+
+        {{ login_form.email(placeholder="user@example.com") }}
+        {{ login_form.password(placeholder="password") }}
+
+        {{ login_form.submit }}
+
+    </form>
+    <form action= "{{ url_for('register') }}" method="get" >
+        {{ login_form.hidden_tag() }}
+        {{ login_form.register }}
+    </form>
+
+</div>

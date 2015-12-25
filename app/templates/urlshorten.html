@@ -1,0 +1,17 @@
+    <div class="title">
+         <h1>URL Shortener!</h1>
+    </div>
+
+    <div>
+        <form action="/urlshorten" method="post" >
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}" />
+            <input type="url" id="url"  name="url" required />
+            <input type="submit" value="Shorten">
+        </form>
+    </div>
+
+    {% if shortURL %}
+        <div class="shortUrlOutput">
+            {{ shortURL }}
+        </div>
+    {% endif %}

@@ -8,6 +8,7 @@ from urlshortener import urlShortener
 
 
 class TestUrlShortener(unittest.TestCase):
+    """ test the model of url handler """
     def setUp(self):
         connection = pymongo.MongoClient('mongodb://localhost:27017/')
         self.database = connection.test

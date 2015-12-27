@@ -40,16 +40,15 @@ class TestUser(unittest.TestCase):
         user = 'duplicatetestuser'
         password = 'duplicatetestuserpassword'
         password2 = 'duplicatetestuserpassword2'
-        result = self.user.save_user(user, password)
+        _ = self.user.save_user(user, password)
 
-        result = self.user.save_user(user, password)
+        result = self.user.save_user(user, password2)
 
         self.assertEqual(result, False)
 
         self.collection.delete_one({'_id': user})
 
     def test_remove_user(self):
-
         user = 'removeuser'
         password = 'removeuserpassword'
         self.user.save_user(user, password)
@@ -57,21 +56,17 @@ class TestUser(unittest.TestCase):
         result = self.user.delete_user(user)
 
         self.assertEqual(result, True)
-        doc = self.collection.find_one({'_id':user})
+        doc = self.collection.find_one({'_id': user})
         self.assertEqual(doc, None)
 
-
     def test_remove_non_existing_user(self):
-
         user = 'dummyuser'
 
         result = self.user.delete_user(user)
 
         self.assertEqual(result, False)
 
-
     def test_get_user(self):
-
         user = 'myuser'
         password = 'mypassword'
         self.user.save_user(user, password)
@@ -80,12 +75,9 @@ class TestUser(unittest.TestCase):
 
         self.assertEqual(result, password)
 
-        self.collection.delete_one({'_id':user})
+        self.collection.delete_one({'_id': user})
 
     def test_get_user_non_existing(self):
-
         result = self.user.get_password('nonExistingUser')
 
         self.assertEqual(result, None)
-
-

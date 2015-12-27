@@ -1,5 +1,8 @@
 import unittest
 import pymongo
+import sys
+sys.path.append('../../')
+sys.path.append('../')
 
 from urlshortener import urlShortener
 

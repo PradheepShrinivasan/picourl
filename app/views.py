@@ -17,16 +17,14 @@ from config import SITE_URL
 @app.route('/index', methods=['post', 'get'])
 def index():
 
-    print request.data, request.form, request.args
-    login_form = LoginForm(request.form)
-    logout_form = LogoutForm(request.form)
-    short_url_form = ShortURLForm(request.form)
+    login_form = LoginForm()
+    logout_form = LogoutForm()
+    short_url_form = ShortURLForm()
 
     if request.method == 'POST' and short_url_form.validate():
         url = short_url_form.url.data
         url_shortener_handler = urlShortener()
 
-        print "inside post method"
         app.logger.debug('in post method to shorten Url(%s)', url)
 
         # TODO have a mechanism for handling duplicate key error
@@ -42,7 +40,7 @@ def index():
         else:
             app.logger.critical('Error in saving short url(%s) for url is (%s)', short_url, url)
             flash('Internal error try again')
-    print 'before return'
+
     return render_template('index.html',
                            login_form=login_form,
                            logout_form=logout_form,

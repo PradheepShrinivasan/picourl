@@ -1,4 +1,3 @@
-from flask import flash
 from flask_wtf import Form
 
 from wtforms import StringField, validators, PasswordField, SubmitField, TextField
@@ -22,3 +21,4 @@ class RegisterForm(Form):
         """  performs validation of input  """
         if not Form.validate(self):
             return False
+        return True

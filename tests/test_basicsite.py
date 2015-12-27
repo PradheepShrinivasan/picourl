@@ -11,13 +11,14 @@ from app import app
 
 class TestBasicUrlShortener(unittest.TestCase):
     """ This tests the basic site when the user has not logged in """
+
     def setUp(self):
         app.config['TESTING'] = True
         app.debug = True
-        #app.config['WTF_CSRF_ENABLED'] = False
+        # app.config['WTF_CSRF_ENABLED'] = False
         self.baseURL = 'http://localhost:5000'
         self.client = app.test_client()
-        #app.config['WTF_CSRF_ENABLED'] = False
+        # app.config['WTF_CSRF_ENABLED'] = False
 
     def getcsrf_value(self):
         """ returns the csrf token by sending a dummy request """
@@ -30,7 +31,7 @@ class TestBasicUrlShortener(unittest.TestCase):
         rv = self.client.get('/')
 
         soup = BeautifulSoup(rv.data, 'html.parser')
-        tag = soup.body.find('input', attrs={'name' : 'csrf_token'})
+        tag = soup.body.find('input', attrs={'name': 'csrf_token'})
         return tag['value']
 
     def generate_shortURL(self):
@@ -58,11 +59,11 @@ class TestBasicUrlShortener(unittest.TestCase):
         # the correct value to expect and perform validation
         # accordingly
         from app.models import urlshortener
+
         urlshortener.urlShortener.generateShortUrl = self.generate_shortURL
         post_data = {'url': 'http://www.google.com/',
                      'submit': 'Shorten',
                      'csrf_token': self.getcsrf_value()}
-
 
         rv = self.client.post('/',
                               data=post_data,
@@ -76,7 +77,6 @@ class TestBasicUrlShortener(unittest.TestCase):
         urlshort = urlshortener.urlShortener()
         urlshort.removeUrl(self.generate_shortURL())
 
-
     def test_post_to_urlShortener_fail_in_model(self):
         """    the case where we send a request to shorten the url and for
                 whatever reason , the code shortened url is not created
@@ -84,6 +84,7 @@ class TestBasicUrlShortener(unittest.TestCase):
         # monkey patch the code to make sure that the saveUrl returns
         # false so we can check the return value.
         from app.models import urlshortener
+
         beforepatch = urlshortener.urlShortener.saveUrl
         urlshortener.urlShortener.saveUrl = self.stub_saveURL_returns_false
         post_data = {'url': 'http://www.google.com/',
@@ -99,7 +100,6 @@ class TestBasicUrlShortener(unittest.TestCase):
         # cleanup
         urlshortener.urlShortener.saveUrl = beforepatch
 
-
     def test_get_shorturl(self):
         """
             the user uses the short url
@@ -110,6 +110,7 @@ class TestBasicUrlShortener(unittest.TestCase):
         # store it in database and then
         # do a get with short url
         from app.models import urlshortener
+
         urlshortener.urlShortener.generateShortUrl = self.generate_shortURL_for_redirect
         post_data = {'url': 'http://www.google.com/',
                      'submit': 'Shorten',
@@ -128,7 +129,6 @@ class TestBasicUrlShortener(unittest.TestCase):
         urlshort = urlshortener.urlShortener()
         urlshort.removeUrl(self.generate_shortURL())
 
-
     def test_get_invalidShortUrl(self):
         """ try to access a invalid shorturl and the code
         must return error code 404 not found """
@@ -138,4 +138,3 @@ class TestBasicUrlShortener(unittest.TestCase):
         rv = self.client.get(shorturl)
 
         self.assertEqual(rv.status_code, 404)
-

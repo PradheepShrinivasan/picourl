@@ -16,4 +16,5 @@ class TestLoginAndLogout(unittest.TestCase):
         # app.config['WTF_CSRF_ENABLED'] = False
 
     def test_userLogin(self):
-        
+        pass
+    

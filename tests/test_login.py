@@ -6,6 +6,7 @@ sys.path.append('..')
 from app import app
 
 class TestLoginAndLogout(unittest.TestCase):
+    """ Class to test login and logout of users """
 
     def setUp(self):
         app.config['TESTING'] = True
@@ -15,6 +16,5 @@ class TestLoginAndLogout(unittest.TestCase):
         self.client = app.test_client()
         # app.config['WTF_CSRF_ENABLED'] = False
 
-    def test_userLogin(self):
+    def test_user_login(self):
         pass
-    

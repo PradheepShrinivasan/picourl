@@ -110,7 +110,7 @@ class TestBasicUrlShortener(unittest.TestCase):
         # store it in database and then
         # do a get with short url
         from app.models import urlshortener
-
+        beforepatch = urlshortener.urlShortener.generateShortUrl
         urlshortener.urlShortener.generateShortUrl = self.generate_shortURL_for_redirect
         post_data = {'url': 'http://www.google.com/',
                      'submit': 'Shorten',
@@ -126,6 +126,7 @@ class TestBasicUrlShortener(unittest.TestCase):
         self.assertEqual(rv.location, 'http://www.google.com/')
 
         # cleanup so next time it works
+        urlshortener.urlShortener.generateShortUrl = beforepatch
         urlshort = urlshortener.urlShortener()
         urlshort.removeUrl(self.generate_shortURL())
 

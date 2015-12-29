@@ -1,5 +1,5 @@
 import pymongo
-from MongodbHandler import MongoDatabaseHandler
+from mongodbhandler import MongoDatabaseHandler
 
 
 class UserDatabase(object):

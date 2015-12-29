@@ -16,7 +16,7 @@ class TestUser(unittest.TestCase):
         self.user = UserDatabase()
 
         # monkey patch the mongodb handler to use the test database of user
-        from MongodbHandler import MongoDatabaseHandler
+        from mongodbhandler import MongoDatabaseHandler
 
         MongoDatabaseHandler.get_users_collection = self.get_user_collection
 

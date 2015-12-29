@@ -1,6 +1,6 @@
 from flask_wtf import Form
 
-from wtforms import StringField, validators, PasswordField, SubmitField, TextField
+from wtforms import StringField, validators, PasswordField, SubmitField
 from wtforms.validators import email, data_required
 
 
@@ -15,7 +15,6 @@ class RegisterForm(Form):
 
     def __init__(self, *args, **kwargs):
         Form.__init__(self, *args, **kwargs)
-
 
     def validate(self):
         """  performs validation of input  """

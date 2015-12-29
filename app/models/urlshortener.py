@@ -1,7 +1,7 @@
 import random
 import string
 
-from MongodbHandler import MongoDatabaseHandler
+from mongodbhandler import MongoDatabaseHandler
 
 
 class urlShortener(object):

@@ -9,7 +9,9 @@ env:
 	make deps
 
 activate:
-	source venv/bin/activate
+	(\
+	venv/bin/activate \
+	)
 
 deps:
 	pip install -r requirements.txt --use-mirrors

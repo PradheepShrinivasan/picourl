@@ -1,4 +1,4 @@
-## This file performs the basic site testing of the application
+# This file performs the basic site testing of the application
 
 import unittest
 import sys
@@ -23,11 +23,11 @@ class TestBasicUrlShortener(unittest.TestCase):
     def getcsrf_value(self):
         """ returns the csrf token by sending a dummy request """
 
-        """ I spent a good amount of time making the csr_token invalidation with the
-            configuration work, but seems i end up trouble making it work.so the easier
-            way is to parse the code and get the csr value. This was due to bug
-            https://github.com/lepture/flask-wtf/issues/208
-        """
+        # I spent a good amount of time making the csr_token invalidation with the
+        #    configuration work, but seems i end up trouble making it work.so the easier
+        #    way is to parse the code and get the csr value. This was due to bug
+        #    https://github.com/lepture/flask-wtf/issues/208
+
         rv = self.client.get('/')
 
         soup = BeautifulSoup(rv.data, 'html.parser')
@@ -110,6 +110,7 @@ class TestBasicUrlShortener(unittest.TestCase):
         # store it in database and then
         # do a get with short url
         from app.models import urlshortener
+
         beforepatch = urlshortener.urlShortener.generateShortUrl
         urlshortener.urlShortener.generateShortUrl = self.generate_shortURL_for_redirect
         post_data = {'url': 'http://www.google.com/',

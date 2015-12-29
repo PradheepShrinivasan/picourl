@@ -5,6 +5,7 @@ sys.path.append('..')
 
 from app import app
 
+
 class TestLoginAndLogout(unittest.TestCase):
     """ Class to test login and logout of users """
 

@@ -107,7 +107,7 @@ def register():
     app.logger.debug('registering user')
 
     form = RegisterForm(request.form)
-    if request.method == 'POST':
+    if request.method == 'POST' and form.validate():
         app.logger.debug('The user name(%s) and password(%s) ', form.email.data, form.password.data)
         user = User(form.email.data, form.password.data)
         if user.add_user():

@@ -9,6 +9,7 @@ from app import app
 
 from app.user import User
 
+
 class TestLoginAndLogout(unittest.TestCase):
     """ Class to test login and logout of users """
 
@@ -20,7 +21,6 @@ class TestLoginAndLogout(unittest.TestCase):
         self.baseURL = 'http://localhost:5000'
         self.client = app.test_client()
 
-
     def delete_test_user(self, username):
         """  deletes the user from database """
         user = User(username, 'dummy')
@@ -29,7 +29,7 @@ class TestLoginAndLogout(unittest.TestCase):
     def add_test_user(self, username, password):
         """ adds a user to the database so that we can use it for testing
         """
-        user= User(username, password)
+        user = User(username, password)
         # delete the user if its already in the database
         # just to be sure that its not part of the last
         # unsucessful run
@@ -67,7 +67,7 @@ class TestLoginAndLogout(unittest.TestCase):
         post_data = {'csrf_token': self.getcsrf_value(),
                      'submit': 'Logout'}
         return self.client.post('/logout', data=post_data,
-                               follow_redirects=True)
+                                follow_redirects=True)
 
     def test_user_login_logout(self):
         """ create test users and login and logout to make sure

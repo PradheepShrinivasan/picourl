@@ -1,6 +1,6 @@
 # PicoURL
 ![](https://travis-ci.org/PradheepShrinivasan/picourl.svg?branch=master)
-[![Coverage Status](https://coveralls.io/repos/PradheepShrinivasan/picourl/badge.svg?branch=addCoverageSupport&service=github)](https://coveralls.io/github/PradheepShrinivasan/picourl?branch=addCoverageSupport)
+[![Coverage Status](https://coveralls.io/repos/PradheepShrinivasan/picourl/badge.svg?branch=master&service=github)](https://coveralls.io/github/PradheepShrinivasan/picourl?branch=master)
 [![Code Health](https://landscape.io/github/PradheepShrinivasan/picourl/master/landscape.svg?style=flat)](https://landscape.io/github/PradheepShrinivasan/picourl/master)
 
 A PicoURL is a URL shortener written in python using Flask and pymongo.

@@ -24,6 +24,16 @@ class User(UserMixin):
         else:
             return None
 
+    def delete_user(self):
+        """ delete the user """
+
+        userdb = UserDatabase()
+        rv =  userdb.delete_user(self.email)
+
+        app.logger.debug("deleting user with username (%s) resulted in (%s) ", self.email, str(rv))
+
+
+
     def checkpassword(self, password):
         """ hashes the password provided and checks with the
         password from the database

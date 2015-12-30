@@ -14,11 +14,12 @@ class TestBasicUrlShortener(unittest.TestCase):
 
     def setUp(self):
         app.config['TESTING'] = True
-        app.debug = True
-        # app.config['WTF_CSRF_ENABLED'] = False
+        # Set the below to True to enable debug logs
+        app.debug = False
+        app.config['WTF_CSRF_ENABLED'] = True
+
         self.baseURL = 'http://localhost:5000'
         self.client = app.test_client()
-        # app.config['WTF_CSRF_ENABLED'] = False
 
     def getcsrf_value(self):
         """ returns the csrf token by sending a dummy request """

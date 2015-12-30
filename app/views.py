@@ -69,8 +69,12 @@ def getURL(shorturl):
 def login():
     """" handles all user login handling """
 
+    app.logger.debug('Inside Login form')
+
     login_form = LoginForm(request.form)
     if request.method == 'POST' and login_form.validate():
+        app.logger.debug('Post menthod recieved and form validated')
+
         login_user(User.getuser(login_form.email.data))
         nexturl = request.args.get('next')
         return redirect(nexturl or url_for('index'))
@@ -82,11 +86,16 @@ def login():
 @login_required
 def logout():
     """ Logout user when he is done """
+    app.logger.debug("Inside logout with request method(%s)", request.method)
 
     if request.method == 'POST':
         user = current_user
         user.authenticated = False
+        app.logger.debug("Logged out user %s", user.email)
+        flash('Logout Successful')
         logout_user()
+    else:
+        flash('User is not logged in. Login again')
 
     return redirect(url_for('index'))
 

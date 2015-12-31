@@ -6,8 +6,10 @@ colorama==0.3.5
 coverage==4.0.3
 coveralls==1.1
 docopt==0.6.2
+dominate==2.1.16
 flake8==2.5.1
 Flask==0.10.1
+Flask-Bootstrap==3.3.5.7
 Flask-Login==0.3.2
 Flask-Testing==0.4.2
 Flask-WTF==0.12
@@ -28,6 +30,7 @@ requests==2.9.0
 six==1.10.0
 traceback2==1.4.0
 unittest2==1.1.0
+visitor==0.1.2
 Werkzeug==0.11.2
 wheel==0.24.0
 wrapt==1.10.6

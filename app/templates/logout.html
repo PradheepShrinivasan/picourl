@@ -1,7 +1,12 @@
-    <form action= "{{ url_for('logout') }}" method="post" >
 
-        {{ logout_form.hidden_tag() }}
+<li class="dropdown">
+    <div class="col-lg-12">
+        <form action="{{ url_for('logout') }}" method="post" role="form">
 
-        {{ logout_form.submit }}
+            {{ logout_form.hidden_tag() }}
 
-    </form>
+            {{ logout_form.submit(class="form-control btn btn-info") }}
+
+        </form>
+    </div>
+</li>

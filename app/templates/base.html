@@ -1,12 +1,17 @@
-<html>
-    <head>
+<!DOCTYPE html>
 
-        {% if title %}
-            <title>{{ title }} - URL Shortener</title>
-        {% else %}
-            <title>Welcome to URL Shortener</title>
-        {% endif %}
-        <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+<html lang="en">
+    <head>
+        <link href="static/style.css" rel="stylesheet" type="text/css">
+        {% extends "bootstrap/base.html" %}
+
+        {% block title %}
+            {% if title  %}
+                 {{ title }} - URL Shortener
+            {% else %}
+                Welcome to URL Shortener
+            {% endif %}
+        {% endblock %}
 
     </head>
     <body>

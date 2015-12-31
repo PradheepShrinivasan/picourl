@@ -38,13 +38,6 @@ class TestRegister(unittest.TestCase):
         tag = soup.body.find('input', attrs={'name': 'csrf_token'})
         return tag['value']
 
-    def test_basic_register_get(self):
-
-        rv = self.client.get('/register', data={'csrf_token': self.getcsrf_value()})
-
-        assert rv.status_code == 200
-       # print rv.data
-
     def test_basic_register_post(self):
         """  register a user and check if user is logged in
         """
@@ -62,7 +55,6 @@ class TestRegister(unittest.TestCase):
         rv = self.client.post('/register', data=post_data,
                               follow_redirects=True)
 
-        #print rv.data
         assert rv.status_code == 200
         assert 'Thanks for registering' in rv.data
         # The user must be logged in so check that logout

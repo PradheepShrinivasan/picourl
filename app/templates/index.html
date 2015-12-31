@@ -2,19 +2,8 @@
 
 {% block content %}
 
-    {% if current_user.is_authenticated  %}
+        {% include "navigation.html" %}
 
-        Hi {{ current_user.email }}!
-
-        {% include "logout.html" %}
-
-    {% else %}
-
-        {% include "login.html" %}
-
-    {% endif %}
-
-    {% include "urlshorten.html" %}
-
+        {% include "urlshorten.html" %}
 
 {% endblock %}

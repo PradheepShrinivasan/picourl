@@ -20,6 +20,8 @@ def index():
     login_form = LoginForm()
     logout_form = LogoutForm()
     short_url_form = ShortURLForm()
+    register_form = RegisterForm()
+    short_url = None
 
     if request.method == 'POST' and short_url_form.validate():
         url = short_url_form.url.data
@@ -32,11 +34,7 @@ def index():
 
         if url_shortener_handler.saveUrl(short_url, url):
             app.logger.debug('value of short url(%s) for url is (%s)', short_url, url)
-            return render_template('index.html',
-                                   login_form=login_form,
-                                   logout_form=logout_form,
-                                   shorturl_form=short_url_form,
-                                   shortURL=SITE_URL + '/' + short_url)
+            short_url=SITE_URL + '/' + short_url
         else:
             app.logger.critical('Error in saving short url(%s) for url is (%s)', short_url, url)
             flash('Internal error try again')
@@ -45,7 +43,8 @@ def index():
                            login_form=login_form,
                            logout_form=logout_form,
                            shorturl_form=short_url_form,
-                           shortURL=None)
+                           register_form=register_form,
+                           shortURL=short_url)
 
 
 @app.route('/<shorturl>')
@@ -100,14 +99,14 @@ def logout():
     return redirect(url_for('index'))
 
 
-@app.route('/register', methods=['GET', 'POST'])
+@app.route('/register', methods=['POST'])
 def register():
     """ handles user registration """
 
     app.logger.debug('registering user')
 
     form = RegisterForm(request.form)
-    if request.method == 'POST' and form.validate():
+    if form.validate():
         app.logger.debug('The user name(%s) and password(%s) ', form.email.data, form.password.data)
         user = User(form.email.data, form.password.data)
         if user.add_user():
@@ -116,9 +115,9 @@ def register():
         else:
             flash('User already registered.Try login')
 
-        return redirect(url_for('index'))
+    return redirect(url_for('index'))
 
-    return render_template('register.html', form=form)
+
 
 
 @login_manager.user_loader

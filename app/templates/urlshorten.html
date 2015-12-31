@@ -1,17 +1,35 @@
-    <div class="title">
-         <h1>URL Shortener!</h1>
-    </div>
 
-    <div>
-        <form action="{{ url_for('index') }}" method="post" >
-            {{  shorturl_form.hidden_tag() }}
-            {{  shorturl_form.url }}
-            {{ shorturl_form.submit }}
-        </form>
-    </div>
+<div class="container">
 
-    {% if shortURL %}
-        <div class="shortUrlOutput">
-            {{ shortURL }}
+    <div class="row">
+        <div class="col-xs-4 col-xs-offset-4">
+            <h1>URL Shortener!</h1>
         </div>
-    {% endif %}
+    </div>
+
+    <div class="row">
+        <div class="col-xs-4 col-xs-offset-4">
+
+            <div class="form-inline">
+                <div class="form-group">
+                    <form action="{{ url_for('index') }}" method="post"  >
+                        {{  shorturl_form.hidden_tag() }}
+                        {{  shorturl_form.url(class="form-control", placeholder="Long URL") }}
+                        {{ shorturl_form.submit(class="btn btn-info") }}
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row" >
+        <div class="col-xs-4 col-xs-offset-4">
+            <div class = "shorturl">
+                {% if shortURL %}
+                     {{ shortURL }}
+                {% endif %}
+            </div>
+
+        </div>
+     </div>
+</div>

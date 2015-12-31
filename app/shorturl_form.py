@@ -7,7 +7,8 @@ from wtforms.validators import url, data_required
 
 class ShortURLForm(Form):
 
-    url = StringField('url', validators=[url(), data_required()])
+    url = StringField('url', validators=[url(message="Must be valid url"),
+                                         data_required(message="Url is mandatory")])
     submit = SubmitField('Shorten')
 
     def __init__(self, *args, **kwargs):

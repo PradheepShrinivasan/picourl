@@ -39,6 +39,7 @@ def index():
             app.logger.critical('Error in saving short url(%s) for url is (%s)', short_url, url)
             flash('Internal error try again')
 
+    flash_errors(short_url_form)
     return render_template('index.html',
                            login_form=login_form,
                            logout_form=logout_form,
@@ -78,6 +79,8 @@ def login():
         nexturl = request.args.get('next')
         return redirect(nexturl or url_for('index'))
 
+    flash_errors(login_form)
+
     return redirect(url_for('index'))
 
 
@@ -115,8 +118,8 @@ def register():
         else:
             flash('User already registered.Try login')
     else:
-        flash('User validation failed')
-
+        app.logger.debug('form error(%s)', form.errors)
+        flash_errors(form)
     return redirect(url_for('index'))
 
 
@@ -131,3 +134,13 @@ def user_loader(user_id):
 # @app.errorhandler(404)
 # def page_not_found(error):
 #    return render_template('page_not_found.html'), 404
+
+# TODO move it to utils
+def flash_errors(form):
+    """ parses the form and converts error string to messages """
+    for field, errors in form.errors.items():
+        for error in errors:
+            flash(u"Error in the %s field - %s" % (
+                getattr(form, field).label.text,
+                error
+            ))

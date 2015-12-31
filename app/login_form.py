@@ -10,8 +10,8 @@ from user import User
 class LoginForm(Form):
     """" Login form to log in a user with validations """
 
-    email = StringField('email', validators=[email(), data_required()])
-    password = PasswordField('Password', validators=[data_required()])
+    email = StringField('email', validators=[email(message="must be an email address"), data_required(message="No email provided")])
+    password = PasswordField('Password', validators=[data_required(message="No password provided")])
     submit = SubmitField('Login')
     register = SubmitField('Register')
 

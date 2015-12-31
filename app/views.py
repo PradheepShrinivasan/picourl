@@ -73,14 +73,14 @@ def login():
     login_form = LoginForm(request.form)
 
     if login_form.validate():
-        app.logger.debug('Post menthod recieved and form validated')
+        app.logger.debug('Post method recieved and form validated')
 
         login_user(User.getuser(login_form.email.data))
         nexturl = request.args.get('next')
-        return redirect(nexturl or url_for('index'))
+        return redirect(nexturl or '/')
 
     flash_errors(login_form)
-    return redirect(url_for('index'))
+    return redirect('/')
 
 
 
@@ -96,7 +96,7 @@ def logout():
     flash('Logout Successful')
     logout_user()
 
-    return redirect(url_for('index'))
+    return redirect('/')
 
 
 @app.route('/register', methods=['POST'])
@@ -117,7 +117,7 @@ def register():
     else:
         app.logger.debug('form error(%s)', form.errors)
         flash_errors(form)
-    return redirect(url_for('index'))
+    return redirect('/')
 
 
 

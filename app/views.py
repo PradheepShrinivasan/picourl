@@ -114,6 +114,8 @@ def register():
             flash('Thanks for registering')
         else:
             flash('User already registered.Try login')
+    else:
+        flash('User validation failed')
 
     return redirect(url_for('index'))
 

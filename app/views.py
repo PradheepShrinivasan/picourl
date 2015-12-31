@@ -13,8 +13,8 @@ from user import User
 from config import SITE_URL
 
 
-@app.route('/', methods=['post', 'get'])
-@app.route('/index', methods=['post', 'get'])
+@app.route('/', methods=['POST', 'GET'])
+@app.route('/index', methods=['POST', 'GET'])
 def index():
 
     login_form = LoginForm()
@@ -65,14 +65,14 @@ def getURL(shorturl):
         return abort(404)
 
 
-@app.route('/login', methods=['POST', 'GET'])
+@app.route('/login', methods=['POST'])
 def login():
     """" handles all user login handling """
 
     app.logger.debug('Inside Login form')
-
     login_form = LoginForm(request.form)
-    if request.method == 'POST' and login_form.validate():
+
+    if login_form.validate():
         app.logger.debug('Post menthod recieved and form validated')
 
         login_user(User.getuser(login_form.email.data))
@@ -80,24 +80,21 @@ def login():
         return redirect(nexturl or url_for('index'))
 
     flash_errors(login_form)
-
     return redirect(url_for('index'))
 
 
-@app.route('/logout', methods=['POST', 'GET'])
+
+@app.route('/logout', methods=['POST'])
 @login_required
 def logout():
     """ Logout user when he is done """
     app.logger.debug("Inside logout with request method(%s)", request.method)
 
-    if request.method == 'POST':
-        user = current_user
-        user.authenticated = False
-        app.logger.debug("Logged out user %s", user.email)
-        flash('Logout Successful')
-        logout_user()
-    else:
-        flash('User is not logged in. Login again')
+    user = current_user
+    user.authenticated = False
+    app.logger.debug("Logged out user %s", user.email)
+    flash('Logout Successful')
+    logout_user()
 
     return redirect(url_for('index'))
 

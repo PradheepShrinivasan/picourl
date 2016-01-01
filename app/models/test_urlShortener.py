@@ -21,7 +21,7 @@ class TestUrlShortener(unittest.TestCase):
         url = "http://www.google.com"
         shortUrl = "gl"
 
-        result = self.urlShortener.saveUrl(shortUrl, url)
+        result, reason = self.urlShortener.saveUrl(shortUrl, url)
 
         # Assertions
         self.assertEqual(result, True)
@@ -37,9 +37,10 @@ class TestUrlShortener(unittest.TestCase):
         urldup = 'http://www.yahoo.com'
 
         self.urlShortener.saveUrl(shortUrl, url)
-        result = self.urlShortener.saveUrl(shortUrl, urldup)
+        result, reason = self.urlShortener.saveUrl(shortUrl, urldup)
 
         self.assertEqual(result, False)
+        self.assertEqual(reason, 'DuplicateKeyError')
         doc = self.collection.find_one({'_id': shortUrl})
         self.assertEqual(doc, {'_id': shortUrl, 'url': url})
 

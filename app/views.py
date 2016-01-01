@@ -24,19 +24,9 @@ def index():
     short_url = None
 
     if request.method == 'POST' and short_url_form.validate():
-        url = short_url_form.url.data
-        url_shortener_handler = urlShortener()
 
-        app.logger.debug('in post method to shorten Url(%s)', url)
-
-        # TODO have a mechanism for handling duplicate key error
-        short_url = url_shortener_handler.generateShortUrl()
-
-        if url_shortener_handler.saveUrl(short_url, url):
-            app.logger.debug('value of short url(%s) for url is (%s)', short_url, url)
-            short_url=SITE_URL + '/' + short_url
-        else:
-            app.logger.critical('Error in saving short url(%s) for url is (%s)', short_url, url)
+        short_url = generate_and_store_short_url(short_url_form.url.data)
+        if short_url is None:
             flash('Internal error try again')
 
     flash_errors(short_url_form)
@@ -141,3 +131,33 @@ def flash_errors(form):
                 getattr(form, field).label.text,
                 error
             ))
+
+# TODO Move it an another new  file - utils ???
+def generate_and_store_short_url(url):
+
+    """ generates a short url for url parameter and store it in db
+        it tries 3 times to generate and store a short url and if
+        all the three attempts fails returns False else returns True
+     """
+
+    url_shortner_handler = urlShortener()
+    count = 0
+    short_url = None
+
+    while True:
+        short_url = url_shortner_handler.generateShortUrl()
+        result, reason = url_shortner_handler.saveUrl(short_url, url)
+        if result:
+            app.logger.debug('value of short url(%s) for url is (%s)', short_url, url)
+            short_url = SITE_URL + '/' + short_url
+            break
+        else:
+            if reason is 'DuplicateKeyError' and count < 3:
+                app.logger.debug('Short URL(%s) generated is already used. Trying again', short_url)
+                count += 1
+                continue
+            else:
+                app.logger.critical('Error in saving short url(%s) for url is (%s)', short_url, url)
+                break
+
+    return short_url

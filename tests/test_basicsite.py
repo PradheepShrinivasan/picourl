@@ -42,7 +42,7 @@ class TestBasicUrlShortener(unittest.TestCase):
         return 'redirectshort_url'
 
     def stub_saveURL_returns_false(self, url, shortUrl):
-        return False
+        return False, None
 
     def test_get_to_index(self):
         """ Make sure that we have the index page working """

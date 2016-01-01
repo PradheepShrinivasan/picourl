@@ -1,5 +1,6 @@
 import random
 import string
+import pymongo
 
 from mongodbhandler import MongoDatabaseHandler
 
@@ -21,10 +22,15 @@ class urlShortener(object):
 
         saveQuery = {'_id': shortUrl, 'url': url}
         try:
+
             self.collection.insert_one(saveQuery)
+
+        except pymongo.errors.DuplicateKeyError:
+            return False, 'DuplicateKeyError'
         except:
-            return False
-        return True
+            return False,'Misc'
+
+        return True, None
 
     # Finds a url from shorUrl that is sent from the user
     def findUrl(self, shortUrl):

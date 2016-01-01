@@ -82,7 +82,6 @@ class TestLoginAndLogout(unittest.TestCase):
         self.add_test_user(username, password)
 
         rv = self.login(username, password)
-        assert 'Login successful' in rv.data
         assert 'Hi user@gmail.com!' in rv.data
         assert '/logout' in rv.data
 

@@ -16,6 +16,6 @@ class ShortURLForm(Form):
 
     def validate(self):
         """  performs validation of input  """
-        if not Form.validate(self):
-            return False
-        return True
+        if Form.validate(self):
+            return True
+        return False

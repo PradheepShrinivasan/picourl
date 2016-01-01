@@ -18,18 +18,18 @@ class TestUrlShortener(unittest.TestCase):
 
     def test_saveUrl_Unique(self):
         # setup
-        url = "http://www.google.com"
+        longurl = "http://www.google.com"
         short_url = "gl"
         author = 'author'
-        result, reason = self.urlShortener.saveUrl(short_url, url, author)
+        result, reason = self.urlShortener.saveUrl(short_url, longurl, author)
 
         # Assertions
         self.assertEqual(result, True)
         doc = self.collection.find_one({'_id': short_url})
         self.assertEqual(doc['_id'], short_url)
-        self.assertEqual(doc['url'], url)
+        self.assertEqual(doc['longurl'], longurl)
         self.assertEqual(doc['author'], author)
-        self.assertEqual(doc['count'], 0)
+        self.assertEqual(doc['clicks'], 0)
 
         # cleanup so that next time we dont get duplicateKeyError
         self.collection.delete_one({'_id': short_url})
@@ -47,8 +47,8 @@ class TestUrlShortener(unittest.TestCase):
         self.assertEqual(reason, 'DuplicateKeyError')
         doc = self.collection.find_one({'_id': shortUrl})
         self.assertEqual(doc['_id'], shortUrl)
-        self.assertEqual(doc['url'],  url)
-        self.assertEqual(doc['count'], 0)
+        self.assertEqual(doc['longurl'],  url)
+        self.assertEqual(doc['clicks'], 0)
 
         self.collection.delete_one({'_id': shortUrl})
 
@@ -88,6 +88,39 @@ class TestUrlShortener(unittest.TestCase):
 
         self.assertEqual(result, True)
 
+    def test_increment_view_count(self):
+        """  Check that view count is incremented by one each time"""
+        shortUrl = 'increment_url'
+        url = 'http://www.google.com'
+        author = 'author'
+        self.urlShortener.saveUrl(shortUrl, url, author)
+
+        self.urlShortener.increment_visited_count(shortUrl)
+        self.urlShortener.increment_visited_count(shortUrl)
+
+        doc = self.urlShortener.get_doc_from_shorturl(shortUrl)
+        self.assertEqual(int(doc['clicks']), 2)
+
+        self.urlShortener.removeUrl(shortUrl)
+
+    def test_find_urls_of_user(self):
+        shortUrl = 'shorturl1'
+        longurl = 'http://www.google.com'
+        author = 'author'
+        self.urlShortener.saveUrl(shortUrl, longurl, author)
+
+        iterator = self.urlShortener.find_url_of_user(author, 1)
+
+        for doc in iterator:
+            self.assertEqual(doc['_id'], shortUrl)
+            self.assertEqual(doc['longurl'], longurl)
+            self.assertEqual(doc['author'], author)
+
+        self.urlShortener.removeUrl(shortUrl)
+
+
+
+
     def test_generateRandom(self):
         """ test the random number generator """
 
@@ -97,3 +130,4 @@ class TestUrlShortener(unittest.TestCase):
         # self.assertEqual(len(self.urlShortener.generateShortUrl(7)), 7)
 
         self.assertEqual(self.urlShortener.generateShortUrl().isalnum(), True)
+

@@ -30,7 +30,8 @@ class TestUser(unittest.TestCase):
         self.assertEqual(result, True)
         # read the user from database
         doc = self.collection.find_one({'_id': user})
-        self.assertEqual(doc, {'_id': user, 'password': password})
+        self.assertEqual(doc['_id'], user)
+        self.assertEqual(doc['password'], password)
 
         self.collection.delete_one({'_id': user})
 
@@ -81,3 +82,4 @@ class TestUser(unittest.TestCase):
         result = self.user.get_password('nonExistingUser')
 
         self.assertEqual(result, None)
+

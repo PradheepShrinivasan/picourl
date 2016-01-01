@@ -1,0 +1,12 @@
+
+{% if current_user.is_authenticated  %}
+
+    <div class="container">
+        <div class="table-responsive">
+
+            {{ table }}
+
+        </div>
+    </div>
+
+{%   endif   %}

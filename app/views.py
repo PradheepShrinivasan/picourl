@@ -1,3 +1,4 @@
+from config import SITE_URL
 
 from app import app, login_manager
 from app.login_form import LoginForm
@@ -9,8 +10,10 @@ from flask import render_template, request, redirect, abort, flash
 from flask_login import login_user, logout_user, current_user, login_required
 
 from models.urlshortener import urlShortener
+
 from user import User
-from config import SITE_URL
+from usage import urlcollection
+
 
 
 @app.route('/', methods=['POST', 'GET'])
@@ -20,25 +23,37 @@ def index():
     logout_form = LogoutForm()
     short_url_form = ShortURLForm()
     register_form = RegisterForm()
+    table = None
+    author = 'anonymous'
     short_url = None
 
-    if request.method == 'POST' and short_url_form.validate():
-        author = 'anonymous'
-        if current_user.is_authenticated:
-            app.logger.debug("current user name is (%s)", current_user.get_id() )
-            author = current_user.get_id()
+    # Set the author details
+    if current_user.is_authenticated:
+        app.logger.debug("current user name is (%s)", current_user.get_id() )
+        author = current_user.get_id()
 
+    # Generate short url
+    if request.method == 'POST' and short_url_form.validate():
         short_url = generate_and_store_short_url(short_url_form.url.data, author)
         if short_url is None:
             flash('Internal error try again')
 
+    # Generate table of urls created
+    if current_user.is_authenticated:
+        url_shortner_handler = urlShortener()
+        iterator = url_shortner_handler.find_url_of_user(author, 7)
+        if iterator is not None:
+            table = urlcollection.create_collection(iterator)
+
+    # Display any errors
     flash_errors(short_url_form)
     return render_template('index.html',
                            login_form=login_form,
                            logout_form=logout_form,
                            shorturl_form=short_url_form,
                            register_form=register_form,
-                           shortURL=short_url)
+                           shortURL=short_url,
+                           table=table)
 
 
 @app.route('/<shorturl>')
@@ -54,6 +69,7 @@ def getURL(shorturl):
     app.logger.debug('value of url is %s', url)
 
     if url is not None:
+        url_shortener_handler.increment_visited_count(shorturl)
         return redirect(url, code=302)
     else:
         return abort(404)

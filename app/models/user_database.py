@@ -1,4 +1,5 @@
 import pymongo
+import datetime
 from mongodbhandler import MongoDatabaseHandler
 
 
@@ -20,7 +21,7 @@ class UserDatabase(object):
             return false if trying to add the same user again
         """
         try:
-            self.collection.insert_one({'_id': username, 'password': password})
+            self.collection.insert_one({'_id': username, 'password': password, 'date':datetime.datetime.now()})
         except pymongo.errors.DuplicateKeyError:
             return False
 

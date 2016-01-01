@@ -27,7 +27,6 @@ class LoginForm(Form):
 
         user = User.getuser(self.email.data.lower())
         if user and user.checkpassword(self.password.data):
-            flash("Login successful")
             return True
         else:
             flash("Invalid e-mail or password")

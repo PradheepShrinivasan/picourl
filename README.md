@@ -5,9 +5,14 @@
 
 A PicoURL is a URL shortener written in python using Flask and pymongo.
 
-I wanted to write a url shortener to improve my understanding of Flask and pymongo.
+The code contains unit tests for all modules and also integration tests for all RESTful endpoints.
 
-The code contains unit tests for all modules and also integration tests for all endpoints.
+Picourl supports the following
+
+    1. Creating short urls anonymously
+    2. Login support for users.
+    3. Shows users 7 most clicked urls.
+    
 
 ## Installation
 

@@ -5,7 +5,7 @@ from app.register_form import RegisterForm
 from app.logout_form import LogoutForm
 from app.shorturl_form import ShortURLForm
 
-from flask import render_template, request, redirect, abort, flash, url_for
+from flask import render_template, request, redirect, abort, flash
 from flask_login import login_user, logout_user, current_user, login_required
 
 from models.urlshortener import urlShortener
@@ -16,7 +16,6 @@ from config import SITE_URL
 @app.route('/', methods=['POST', 'GET'])
 @app.route('/index', methods=['POST', 'GET'])
 def index():
-
     login_form = LoginForm()
     logout_form = LogoutForm()
     short_url_form = ShortURLForm()
@@ -73,7 +72,6 @@ def login():
     return redirect('/')
 
 
-
 @app.route('/logout', methods=['POST'])
 @login_required
 def logout():
@@ -110,13 +108,12 @@ def register():
     return redirect('/')
 
 
-
-
 @login_manager.user_loader
 def user_loader(user_id):
     """  Loads ther user when needed for Login """
     app.logger.debug("Loading user")
     return User.getuser(user_id)
+
 
 # @app.errorhandler(404)
 # def page_not_found(error):
@@ -132,9 +129,9 @@ def flash_errors(form):
                 error
             ))
 
+
 # TODO Move it an another new  file - utils ???
 def generate_and_store_short_url(url):
-
     """ generates a short url for url parameter and store it in db
         it tries 3 times to generate and store a short url and if
         all the three attempts fails returns False else returns True

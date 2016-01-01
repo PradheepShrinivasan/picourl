@@ -23,8 +23,12 @@ def index():
     short_url = None
 
     if request.method == 'POST' and short_url_form.validate():
+        author = 'anonymous'
+        if current_user.is_authenticated:
+            app.logger.debug("current user name is (%s)", current_user.get_id() )
+            author = current_user.get_id()
 
-        short_url = generate_and_store_short_url(short_url_form.url.data)
+        short_url = generate_and_store_short_url(short_url_form.url.data, author)
         if short_url is None:
             flash('Internal error try again')
 
@@ -43,6 +47,7 @@ def getURL(shorturl):
          and if found redirects to the long url path.
          if not found sends a 404 page not found.
     """
+
     url_shortener_handler = urlShortener()
     url = url_shortener_handler.findUrl(shorturl)
 
@@ -62,7 +67,7 @@ def login():
     login_form = LoginForm(request.form)
 
     if login_form.validate():
-        app.logger.debug('Post method recieved and form validated')
+        app.logger.debug('Post method received and form validated')
 
         login_user(User.getuser(login_form.email.data))
         nexturl = request.args.get('next')
@@ -131,7 +136,7 @@ def flash_errors(form):
 
 
 # TODO Move it an another new  file - utils ???
-def generate_and_store_short_url(url):
+def generate_and_store_short_url(url, author):
     """ generates a short url for url parameter and store it in db
         it tries 3 times to generate and store a short url and if
         all the three attempts fails returns False else returns True
@@ -143,7 +148,7 @@ def generate_and_store_short_url(url):
 
     while True:
         short_url = url_shortner_handler.generateShortUrl()
-        result, reason = url_shortner_handler.saveUrl(short_url, url)
+        result, reason = url_shortner_handler.saveUrl(short_url, url, author)
         if result:
             app.logger.debug('value of short url(%s) for url is (%s)', short_url, url)
             short_url = SITE_URL + '/' + short_url

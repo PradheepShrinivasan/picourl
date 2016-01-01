@@ -19,37 +19,44 @@ class TestUrlShortener(unittest.TestCase):
     def test_saveUrl_Unique(self):
         # setup
         url = "http://www.google.com"
-        shortUrl = "gl"
-
-        result, reason = self.urlShortener.saveUrl(shortUrl, url)
+        short_url = "gl"
+        author = 'author'
+        result, reason = self.urlShortener.saveUrl(short_url, url, author)
 
         # Assertions
         self.assertEqual(result, True)
-        doc = self.collection.find_one({'_id': shortUrl})
-        self.assertEqual(doc, {'_id': shortUrl, 'url': url})
+        doc = self.collection.find_one({'_id': short_url})
+        self.assertEqual(doc['_id'], short_url)
+        self.assertEqual(doc['url'], url)
+        self.assertEqual(doc['author'], author)
+        self.assertEqual(doc['count'], 0)
 
         # cleanup so that next time we dont get duplicateKeyError
-        self.collection.delete_one({'_id': shortUrl})
+        self.collection.delete_one({'_id': short_url})
 
     def test_saveUrl_duplicate(self):
         shortUrl = 'orig'
         url = 'http://www.google.com'
         urldup = 'http://www.yahoo.com'
+        author = 'author'
 
-        self.urlShortener.saveUrl(shortUrl, url)
-        result, reason = self.urlShortener.saveUrl(shortUrl, urldup)
+        self.urlShortener.saveUrl(shortUrl, url, author)
+        result, reason = self.urlShortener.saveUrl(shortUrl, urldup, author)
 
         self.assertEqual(result, False)
         self.assertEqual(reason, 'DuplicateKeyError')
         doc = self.collection.find_one({'_id': shortUrl})
-        self.assertEqual(doc, {'_id': shortUrl, 'url': url})
+        self.assertEqual(doc['_id'], shortUrl)
+        self.assertEqual(doc['url'],  url)
+        self.assertEqual(doc['count'], 0)
 
         self.collection.delete_one({'_id': shortUrl})
 
     def test_findUrl_Existing(self):
         shortUrl = 'findUrl'
         url = 'http://www.google.com'
-        self.urlShortener.saveUrl(shortUrl, url)
+        author = 'author'
+        self.urlShortener.saveUrl(shortUrl, url, author)
 
         resultUrl = self.urlShortener.findUrl(shortUrl)
 
@@ -67,7 +74,8 @@ class TestUrlShortener(unittest.TestCase):
     def test_removeURL_Existing(self):
         shortUrl = 'removeURL'
         url = 'http://www.google.com'
-        self.urlShortener.saveUrl(shortUrl, url)
+        author = 'author'
+        self.urlShortener.saveUrl(shortUrl, url, author)
 
         result = self.urlShortener.removeUrl(shortUrl)
 
@@ -83,7 +91,8 @@ class TestUrlShortener(unittest.TestCase):
     def test_generateRandom(self):
         """ test the random number generator """
 
-        # commented as of now as its failing randomly. Race somewhere
+        # commented as of now as its failing randomly. Race due to
+        # monkey patching ???
         # self.assertEqual(len(self.urlShortener.generateShortUrl()), 6)
         # self.assertEqual(len(self.urlShortener.generateShortUrl(7)), 7)
 

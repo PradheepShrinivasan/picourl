@@ -37,6 +37,9 @@ class TestLoginAndLogout(unittest.TestCase):
         rv = user.add_user()
         assert rv
 
+    def generate_shortURL(self):
+        return 'tinyurl765'
+
     def getcsrf_value(self):
         """ returns the csrf token by sending a dummy request """
 
@@ -121,3 +124,34 @@ class TestLoginAndLogout(unittest.TestCase):
         assert rv.status_code == 401
 
         self.delete_test_user(username)
+
+    def test_url_shorten_when_user_logged_in(self):
+        """ post a shorten request when the user is logged inside """
+
+        # monkeypatch the generate shortURL so that we know
+        # the correct value to expect and perform validation
+        # accordingly
+        from app.models import urlshortener
+        urlshortener.urlShortener.generateShortUrl = self.generate_shortURL
+        username = 'validuser@gmail.com'
+        password = 'password'
+        post_data = {'url': 'http://www.google.com/',
+                     'submit': 'Shorten',
+                     'csrf_token': self.getcsrf_value()}
+        self.add_test_user(username, password)
+        self.login(username, password)
+
+        rv = self.client.post('/',
+                              data=post_data,
+                              follow_redirects=False)
+
+        self.assertEqual(rv.status_code, 200)
+        shorturl = self.baseURL + '/' + self.generate_shortURL()
+        assert shorturl in str(rv.data)
+
+        # cleanup so next time it works
+        urlshort = urlshortener.urlShortener()
+        urlshort.removeUrl(self.generate_shortURL())
+        self.logout()
+        self.delete_test_user(username)
+

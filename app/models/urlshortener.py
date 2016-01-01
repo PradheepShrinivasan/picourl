@@ -15,16 +15,21 @@ class urlShortener(object):
         else:
             self.collection = collection
 
-    #  Save short Url and url
-    # The short Url is stored as index as all looks
-    # find and deletes will be only using short Url
-    def saveUrl(self, shortUrl, url):
 
-        saveQuery = {'_id': shortUrl, 'url': url}
+    def saveUrl(self, shortUrl, url, author):
+        """ Save short Url and url\n"
+            The short Url is stored as index as all looks\n"
+            find and deletes will be only using short Url\n"
+        """
+
+        save_query = dict()
+        save_query['_id'] = shortUrl
+        save_query['url'] = url
+        save_query['count'] = 0
+        save_query['author'] = author
+
         try:
-
-            self.collection.insert_one(saveQuery)
-
+            self.collection.insert_one(save_query)
         except pymongo.errors.DuplicateKeyError:
             return False, 'DuplicateKeyError'
         except:
@@ -32,8 +37,8 @@ class urlShortener(object):
 
         return True, None
 
-    # Finds a url from shorUrl that is sent from the user
     def findUrl(self, shortUrl):
+        """ Finds a url from shorUrl that is sent from the user """
 
         doc = self.collection.find_one({'_id': shortUrl})
         if doc is None:
@@ -42,7 +47,7 @@ class urlShortener(object):
         return doc['url']
 
     def removeUrl(self, shortUrl):
-
+        """ remove the short url"""
         try:
             result = self.collection.delete_one({'_id': shortUrl})
         except:

@@ -40,7 +40,7 @@ class TestUser(unittest.TestCase):
         user = 'duplicatetestuser'
         password = 'duplicatetestuserpassword'
         password2 = 'duplicatetestuserpassword2'
-        _ = self.user.save_user(user, password)
+        self.user.save_user(user, password)
 
         result = self.user.save_user(user, password2)
 

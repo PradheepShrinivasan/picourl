@@ -41,7 +41,7 @@ class TestBasicUrlShortener(unittest.TestCase):
     def generate_shortURL_for_redirect(self):
         return 'redirectshort_url'
 
-    def stub_saveURL_returns_false(self, url, shortUrl):
+    def stub_saveURL_returns_false(self, url, shortUrl, author):
         return False, None
 
     def test_get_to_index(self):

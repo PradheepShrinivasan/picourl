@@ -21,7 +21,6 @@ lazy-object-proxy==1.2.1
 linecache2==1.0.0
 MarkupSafe==0.23
 mccabe==0.3.1
-pep8==1.5.7
 py==1.4.31
 pycparser==2.14
 pyflakes==1.0.0

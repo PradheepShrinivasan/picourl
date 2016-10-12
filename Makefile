@@ -16,8 +16,6 @@ activate:
 deps:
 	pip install -r requirements.txt --use-mirrors
 
-
-
 coverage:
 	coverage run --source app -m unittest discover 
 	coverage report -m

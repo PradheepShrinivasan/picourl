@@ -1,10 +1,10 @@
-from flask_wtf import Form
+from flask_wtf import FlaskForm
 
 from wtforms import StringField, validators, PasswordField, SubmitField
 from wtforms.validators import email, data_required
 
 
-class RegisterForm(Form):
+class RegisterForm(FlaskForm):
     """ handles all the user registration """
     email = StringField('email', validators=[email(message="Must be an email address"),
                                              data_required(message="Email address is mandatory")])
@@ -18,10 +18,10 @@ class RegisterForm(Form):
     submit = SubmitField('Register')
 
     def __init__(self, *args, **kwargs):
-        Form.__init__(self, *args, **kwargs)
+        FlaskForm.__init__(self, *args, **kwargs)
 
     def validate(self):
         """  performs validation of input  """
-        if  Form.validate(self):
+        if  FlaskForm.validate(self):
             return True
         return False

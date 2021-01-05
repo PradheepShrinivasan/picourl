@@ -1,10 +1,9 @@
 from flask import flash
 from flask_wtf import Form
+from wtforms import PasswordField, StringField, SubmitField
+from wtforms.validators import data_required, email
 
-from wtforms import StringField, PasswordField, SubmitField
-from wtforms.validators import email, data_required
-
-from user import User
+from app.user import User
 
 
 class LoginForm(Form):

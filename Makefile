@@ -1,9 +1,8 @@
 test:
-	python -m unittest discover
+	python3 -m unittest discover
 	
 env:
-	sudo easy_install pip && \
-	pip install virtualenv && \
+	pip3 install virtualenv && \
 	virtualenv env && \
 	. venv/bin/activate && \
 	make deps
@@ -14,7 +13,7 @@ activate:
 	)
 
 deps:
-	pip install -r requirements.txt --use-mirrors
+	pip3 install -r requirements.txt 
 
 coverage:
 	coverage run --source app -m unittest discover 

@@ -16,8 +16,8 @@ deps:
 	pip3 install -r requirements.txt 
 
 coverage:
-	coverage run --source app -m unittest discover 
-	coverage report -m
+	coverage3 run --source app -m unittest discover 
+	coverage3 report -m
 
 clean:
 	rm -rf .coverage

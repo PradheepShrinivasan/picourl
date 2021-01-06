@@ -171,11 +171,11 @@ def generate_and_store_short_url(url, author):
             break
         else:
             if reason == 'DuplicateKeyError' and count < 3:
-                app.logger.debug('Short URL(%s) generated is already used. Trying again', short_url)
+                app.logger.debug('Short URL(%s) generated for (%s) is already used. Trying again', short_url, url)
                 count += 1
                 continue
             else:
-                app.logger.critical('Error in saving short url(%s) for url is (%s)', short_url, url)
+                app.logger.critical('Error in saving short url(%s) for url is (%s) and reason is (%s)', short_url, url, reason)
                 break
 
     return short_url

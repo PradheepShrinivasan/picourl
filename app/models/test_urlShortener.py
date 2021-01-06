@@ -4,7 +4,7 @@ import sys
 sys.path.append('../../')
 sys.path.append('../')
 
-from urlshortener import urlShortener
+from app.models.urlshortener import urlShortener
 
 
 class TestUrlShortener(unittest.TestCase):

@@ -8,9 +8,7 @@ env:
 	make deps
 
 activate:
-	(\
-	venv/bin/activate \
-	)
+	. venv/bin/activate 
 
 deps:
 	pip3 install -r requirements.txt 

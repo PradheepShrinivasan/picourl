@@ -4,15 +4,13 @@ services: mongodb
 
 language: python
 python:
-  - "2.7" 
+  - "3.9.1" 
   - pypy
-
-
 
 # command to install dependencies
 install:
-  - pip install -r requirements.txt
-  - pip install coveralls
+  - pip3 install -r requirements.txt
+  - pip3 install coveralls
 
 
 # the below is to add an artifical wait for mongodb
@@ -23,7 +21,7 @@ before_script:
 
 # command to run tests
 script:
-    coverage run --source=app -m unittest discover
+    coverage3 run --source=app -m unittest discover
 
 after_success:
     coveralls

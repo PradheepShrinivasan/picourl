@@ -9,10 +9,10 @@ from app.shorturl_form import ShortURLForm
 from flask import render_template, request, redirect, abort, flash
 from flask_login import login_user, logout_user, current_user, login_required
 
-from models.urlshortener import urlShortener
+from app.models.urlshortener import urlShortener
 
-from user import User
-from usage import urlcollection
+from app.user import User
+from app.usage import urlcollection
 
 
 
@@ -170,12 +170,12 @@ def generate_and_store_short_url(url, author):
             short_url = SITE_URL + '/' + short_url
             break
         else:
-            if reason is 'DuplicateKeyError' and count < 3:
-                app.logger.debug('Short URL(%s) generated is already used. Trying again', short_url)
+            if reason == 'DuplicateKeyError' and count < 3:
+                app.logger.debug('Short URL(%s) generated for (%s) is already used. Trying again', short_url, url)
                 count += 1
                 continue
             else:
-                app.logger.critical('Error in saving short url(%s) for url is (%s)', short_url, url)
+                app.logger.critical('Error in saving short url(%s) for url is (%s) and reason is (%s)', short_url, url, reason)
                 break
 
     return short_url

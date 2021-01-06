@@ -2,7 +2,7 @@ import bcrypt
 from app import app
 
 from flask_login import UserMixin
-from models.user_database import UserDatabase
+from app.models.user_database import UserDatabase
 
 
 class User(UserMixin):
@@ -42,7 +42,8 @@ class User(UserMixin):
         # In this case the encoded password is stored in the self.password and
         # password is the raw password
         app.logger.debug("user name (%s) and hashed password(%s)", self.email, self.password)
-        if self.password == bcrypt.hashpw(password.encode('utf-8'), self.password.encode('utf-8')):
+
+        if bcrypt.checkpw(password.encode('utf-8'), self.password):
             self.authenticated = True
             return True
         else:
@@ -67,5 +68,6 @@ class User(UserMixin):
         app.logger.debug("saving user(%s) with password(%s)", self.email, self.password)
         user_db = UserDatabase()
 
-        password_hashed = bcrypt.hashpw(self.password.encode('utf-8'), bcrypt.gensalt())
+        salt = bcrypt.gensalt()
+        password_hashed = bcrypt.hashpw(self.password.encode('utf-8'), salt)
         return user_db.save_user(self.email, password_hashed)

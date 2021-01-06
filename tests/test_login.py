@@ -82,12 +82,12 @@ class TestLoginAndLogout(unittest.TestCase):
         self.add_test_user(username, password)
 
         rv = self.login(username, password)
-        assert 'Hi user@gmail.com!' in rv.data
-        assert '/logout' in rv.data
+        assert b'Hi user@gmail.com!' in rv.data
+        assert b'/logout' in rv.data
 
         rv = self.logout()
-        assert 'Logout Successful' in rv.data
-        assert '/login' in rv.data
+        assert b'Logout Successful' in rv.data
+        assert b'/login' in rv.data
 
         self.delete_test_user(username)
 
@@ -99,9 +99,9 @@ class TestLoginAndLogout(unittest.TestCase):
 
         rv = self.login(username, password)
         assert rv.status_code == 200
-        assert 'Invalid e-mail or password' in rv.data
-        assert '/login' in rv.data
-        assert '/logout' not in rv.data
+        assert b'Invalid e-mail or password' in rv.data
+        assert b'/login' in rv.data
+        assert b'/logout' not in rv.data
 
         rv = self.logout()
         assert rv.status_code == 401
@@ -115,9 +115,9 @@ class TestLoginAndLogout(unittest.TestCase):
 
         rv = self.login(username, password2)
         assert rv.status_code == 200
-        assert 'Invalid e-mail or password' in rv.data
-        assert '/login' in rv.data
-        assert '/logout' not in rv.data
+        assert b'Invalid e-mail or password' in rv.data
+        assert b'/login' in rv.data
+        assert b'/logout' not in rv.data
 
         rv = self.logout()
         assert rv.status_code == 401

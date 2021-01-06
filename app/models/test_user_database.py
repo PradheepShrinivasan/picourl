@@ -1,7 +1,7 @@
 import unittest
 import pymongo
 
-from user_database import UserDatabase
+from app.models.user_database import UserDatabase
 
 
 class TestUser(unittest.TestCase):
@@ -16,7 +16,7 @@ class TestUser(unittest.TestCase):
         self.user = UserDatabase()
 
         # monkey patch the mongodb handler to use the test database of user
-        from mongodbhandler import MongoDatabaseHandler
+        from app.models.mongodbhandler import MongoDatabaseHandler
 
         MongoDatabaseHandler.get_users_collection = self.get_user_collection
 

@@ -1,6 +1,6 @@
 import pymongo
 import datetime
-from mongodbhandler import MongoDatabaseHandler
+from app.models.mongodbhandler import MongoDatabaseHandler
 
 
 class UserDatabase(object):

@@ -42,7 +42,7 @@ Picourl allows configuration of the following variables in `config.py`
 To run the application go to the cloned folder and run it using
 
     ```
-        python run.py
+        flask run
     ```
     
 if you have used the default configuration the system must be listening in port `5000` and you can access it by using
@@ -62,11 +62,14 @@ one can look at the site hosted at heroku [http://picourl.herokuapp.com/](http:/
 
 ## Releases
 
-0.1 - Basic working code with storage to backend mongodb and redirect on using shortURL
+0.4 - Updated to the latest version of python and dependencies
+
+0.3 - Added support to show the users clicked 7 urls.
 
 0.2 - Added UI and form validation using csrf tokens. 
 
-0.3 - Added support to show the users clicked 7 urls.
+0.1 - Basic working code with storage to backend mongodb and redirect on using shortURL
+
 
 ## LICENCE
 

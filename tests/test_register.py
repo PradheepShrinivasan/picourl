@@ -56,11 +56,11 @@ class TestRegister(unittest.TestCase):
                               follow_redirects=True)
 
         assert rv.status_code == 200
-        assert 'Thanks for registering' in rv.data
+        assert b'Thanks for registering' in rv.data
         # The user must be logged in so check that logout
         # and Hi username is present.
-        assert 'Hi '+user in rv.data
-        assert '/logout' in rv.data
+        assert b'Hi '+user.encode('ascii') in rv.data
+        assert b'/logout' in rv.data
 
         #clean up
         self.delete_test_user(user)
@@ -89,4 +89,4 @@ class TestRegister(unittest.TestCase):
 
         # print rv.data
         assert rv.status_code == 200
-        assert 'User already registered.Try login' in rv.data
+        assert b'User already registered.Try login' in rv.data
